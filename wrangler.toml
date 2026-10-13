@@ -1,4 +1,4 @@
 name = "kymnoir-projects"
-main = "src/index.js"
+main = "src/router.js"
 compatibility_date = "2026-10-13"
 workers_dev = true
