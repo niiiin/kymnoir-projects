@@ -1,4 +1,5 @@
 const projects = [
+  { slug: "sanglung-pos", name: "Sanglung Restaurant POS", detail: "Interactive waiter, kitchen and folio simulation", status: "Live demo" },
   { slug: "sanglung", name: "Sanglung Villas", detail: "Guest experience prototype", status: "Live demo" },
   { slug: "time", name: "KYM TIME", detail: "Universal time concept", status: "Live demo" },
   { slug: "atlas", name: "Atlas", detail: "Experimental workspace", status: "Preparing" }
