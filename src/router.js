@@ -1,3 +1,4 @@
+import { growHtml } from "./grow.js";
 import { landscapeHtml } from "./landscape.js";
 import { kymGmHtml } from "./kymgm.js";
 import { housekeepingHtml } from "./housekeeping.js";
@@ -22,6 +23,7 @@ export default {
     if (path === "/projects/sanglung-housekeeping") return new Response(housekeepingHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     if (path === "/projects/kym-gm") return new Response(kymGmHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     if (path === "/projects/sanglung-landscape") return new Response(landscapeHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
+    if (path === "/projects/sanglung-grow") return new Response(growHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     return original.fetch(request, env, ctx);
   }
 };
