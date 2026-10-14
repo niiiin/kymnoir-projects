@@ -1,4 +1,5 @@
 const projects = [
+  { slug: "sanglung-grow", name: "Sanglung GROW", detail: "Direct reservations, referrals, groups, wellness retreats and revenue pipeline", status: "Live demo" },
   { slug: "sanglung-landscape", name: "Sanglung Landscape & Pools", detail: "Garden and pool supervisor inspections with weekly GM reports", status: "Live demo" },
   { slug: "kym-gm", name: "KYM GM", detail: "Owner walkthroughs, photos, voice notes and follow-up tasks", status: "Live demo" },
   { slug: "sanglung-housekeeping", name: "Sanglung Housekeeping QC", detail: "15-villa cleaning, maintenance and sign-off demo", status: "Live demo" },
