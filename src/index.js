@@ -1,4 +1,5 @@
 const projects = [
+  { slug: "sanglung-landscape", name: "Sanglung Landscape & Pools", detail: "Garden and pool supervisor inspections with weekly GM reports", status: "Live demo" },
   { slug: "kym-gm", name: "KYM GM", detail: "Owner walkthroughs, photos, voice notes and follow-up tasks", status: "Live demo" },
   { slug: "sanglung-housekeeping", name: "Sanglung Housekeeping QC", detail: "15-villa cleaning, maintenance and sign-off demo", status: "Live demo" },
   { slug: "sanglung-pos", name: "Sanglung Restaurant POS", detail: "Interactive waiter, kitchen and folio simulation", status: "Live demo" },
