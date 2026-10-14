@@ -1,3 +1,4 @@
+import { housekeepingHtml } from "./housekeeping.js";
 import { posHtml } from "./pos.js";
 import original from "./index.js";
 
@@ -16,6 +17,7 @@ export default {
       });
     }
     if (path === "/projects/sanglung-pos") return new Response(posHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
+    if (path === "/projects/sanglung-housekeeping") return new Response(housekeepingHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     return original.fetch(request, env, ctx);
   }
 };
