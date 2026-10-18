@@ -26,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           install -d -m 700 "$HOME/.ssh"
-          printf '%s\n' "$KYMCORE_SSH_KEY" > "$HOME/.ssh/kymcore_deploy"
+          printf '%s' "$KYMCORE_SSH_KEY" | base64 --decode > "$HOME/.ssh/kymcore_deploy"
           chmod 600 "$HOME/.ssh/kymcore_deploy"
           unset KYMCORE_SSH_KEY
           # Initial first-use server host trust only; pin the verified host fingerprint
