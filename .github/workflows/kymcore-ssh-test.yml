@@ -1,0 +1,37 @@
+name: KYMCORE SSH connection test
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kymcore-ssh-smoke-test
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check credential available
+        env:
+          KYMCORE_SSH_KEY: ${{ secrets.KYMCORE_SSH_KEY }}
+        run: |
+          test -n "$KYMCORE_SSH_KEY" || { echo 'Missing KYMCORE_SSH_KEY secret'; exit 1; }
+          echo 'KYMCORE SSH key secret is present.'
+      - name: SSH login test (no server modifications)
+        env:
+          KYMCORE_SSH_KEY: ${{ secrets.KYMCORE_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$KYMCORE_SSH_KEY" > "$HOME/.ssh/kymcore_deploy"
+          chmod 600 "$HOME/.ssh/kymcore_deploy"
+          unset KYMCORE_SSH_KEY
+          # Initial first-use server host trust only; pin the verified host fingerprint
+          # before enabling any production deployment workflow.
+          ssh -i "$HOME/.ssh/kymcore_deploy" -p 22 \
+            -o BatchMode=yes -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 \
+            kymdeploy@95.179.138.254 'printf "Logged in as: "; whoami; printf "Server: "; hostname'
