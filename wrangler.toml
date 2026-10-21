@@ -2,3 +2,17 @@ name = "kymnoir-projects"
 main = "src/router.js"
 compatibility_date = "2026-10-13"
 workers_dev = true
+
+# Keep the existing project pages routed to this Worker.
+[[routes]]
+pattern = "kymnoir.com/projects"
+zone_name = "kymnoir.com"
+
+[[routes]]
+pattern = "kymnoir.com/projects/*"
+zone_name = "kymnoir.com"
+
+# Standalone public executive portrait. Not linked in project navigation.
+[[routes]]
+pattern = "kymnoir.com/kimvannie"
+zone_name = "kymnoir.com"
