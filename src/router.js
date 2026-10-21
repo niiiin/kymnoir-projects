@@ -19,6 +19,24 @@ export default {
         }
       });
     }
+    if (path === "/kimvannie") {
+      try {
+        const base = "https://raw.githubusercontent.com/niiiin/kymnoir-projects/main/assets/kimvannie/";
+        const pieces = await Promise.all(Array.from({ length: 9 }, async (_, i) => {
+          const part = "part-" + String(i).padStart(2, "0") + ".txt";
+          const res = await fetch(base + part, { cf: { cacheEverything: true, cacheTtl: 3600 } });
+          if (!res.ok) throw new Error("Presentation component unavailable: " + part);
+          return res.text();
+        }));
+        return new Response(pieces.join(""), { headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300",
+          "x-robots-tag": "noindex, nofollow"
+        } });
+      } catch (e) {
+        return new Response("This presentation is temporarily unavailable.", {status: 503, headers: { "content-type": "text/plain; charset=utf-8" }});
+      }
+    }
     if (path === "/projects/sanglung-pos") return new Response(posHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     if (path === "/projects/sanglung-housekeeping") return new Response(housekeepingHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     if (path === "/projects/kym-gm") return new Response(kymGmHtml, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
