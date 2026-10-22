@@ -75,6 +75,26 @@ export default {
         for (const [a, b] of editorial) portraitHtml = portraitHtml.replaceAll(a, b);
         // Keep markup and embedded media intact; remove only visible punctuation and personal phone links.
         portraitHtml = portraitHtml.replaceAll("route—benefiting", "route, benefiting");
+        // Final approved cleanup: no changes to video, audio, font, layout or indexing.
+        portraitHtml = portraitHtml.replace(
+          'I take care of what you ask, with dependable availability and discretion, so your work and surroundings run smoothly. You get your time and your headspace back.',
+          'I take care of what you ask, at any hour, any day of the year, so your thinking, your work and your surroundings simply run. You get your time and your headspace back.'
+        );
+        // Remove the remaining pressure/oxygen quote above the closing.
+        portraitHtml = portraitHtml.replace(/<[^>]+>[^<>]*You might call it pressure\. I call it oxygen\.[^<>]*<\/[^>]+>/g, '');
+        portraitHtml = portraitHtml.replaceAll('“You might call it pressure. I call it oxygen.”', '');
+        // Convert family sentence punctuation into clean independent sentences.
+        portraitHtml = portraitHtml.replace(
+          'My father was director René van Nie; my mother worked in production and later became a TV producer and director, as did my stepfather; my sister is actress Nada van Nie.',
+          'My father was director René van Nie. My mother worked in production and later became a TV producer and director, as did my stepfather. My sister is actress Nada van Nie.'
+        );
+        // Conflicting event records name different years and production companies.
+        // Keep only the agreed, verifiable scope until the original event credit is checked.
+        portraitHtml = portraitHtml.replace('Live events · Spain · 2003', 'Live events · Spain');
+        portraitHtml = portraitHtml.replace(
+          'Worked in event production logistics for a three day Unilever leadership event in Almería, Spain, produced by Signum Niehe Events for around 1,000 participants.',
+          'Worked in event production logistics for a Unilever leadership event in Almería, Spain, for around 1,000 participants.'
+        );
         return new Response(portraitHtml, { headers: {
           "content-type": "text/html; charset=utf-8",
           "cache-control": "public, max-age=300",
