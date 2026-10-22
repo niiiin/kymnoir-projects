@@ -75,6 +75,15 @@ export default {
         for (const [a, b] of editorial) portraitHtml = portraitHtml.replaceAll(a, b);
         // Keep markup and embedded media intact; remove only visible punctuation and personal phone links.
         portraitHtml = portraitHtml.replaceAll("route—benefiting", "route, benefiting");
+        // Address the future principal directly rather than imply a current employer.
+        portraitHtml = portraitHtml.replaceAll(
+          "I make complicated things happen quietly, so the person I work for never has to think about them.",
+          "The person I'm looking for is a high-end individual, someone with a full, complicated life who values their time. I work smart and quick, and I make their thinking, their work and their surroundings run smoother."
+        );
+        portraitHtml = portraitHtml.replaceAll(
+          "My role is to anticipate what the principal needs, reduce avoidable friction and create room for their most important decisions.",
+          "What I offer: anticipating what you need, reducing avoidable friction and creating room for your most important decisions."
+        );
         // Final approved cleanup: no changes to video, audio, font, layout or indexing.
         portraitHtml = portraitHtml.replace(
           'I take care of what you ask, with dependable availability and discretion, so your work and surroundings run smoothly. You get your time and your headspace back.',
