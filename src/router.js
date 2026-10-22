@@ -37,7 +37,7 @@ export default {
         // Editorial revisions approved 22 October 2026. Only text and existing HTML,
         // leaving media, typography, page layout, and noindex untouched.
         const editorial = [
-          ["I make complicated things<br/><em>happen quietly.</em>", "I make complicated things happen quietly."],
+          ["I make complicated things<br/><em>happen quietly.</em>", "Quietly. <em>Already handled.</em>"],
           ["I make complicated things happen quietly, so the person I work for never has to think about them.", "I make complicated things happen quietly, so the person I work for never has to think about them."],
           ["Discreet by habit. What I see stays with me.", "What I see stays with me."],
           ["My role is not to compete for the spotlight. It is to anticipate what the principal needs, reduce avoidable friction and create room for their most important decisions.", "My role is to anticipate what the principal needs, reduce avoidable friction and create room for their most important decisions."],
@@ -45,7 +45,7 @@ export default {
           ["Born in Amsterdam, the Netherlands · ", ""],
           ["Written and produced by Kim René van Nie (KYM NØIR). AI was used to fine-tune the production.", "Written and produced by KYM NØIR, sung by a featured voice."],
           ["approximately 20 keys", "20 keys"],
-          ["An internationally mobile builder-operator with more than 25 years across luxury hospitality, property development, film, creative business and international operations.", "An internationally mobile builder operator with a background in computer systems engineering and more than 25 years across luxury hospitality, property development, film, publishing, television, creative business and international operations."],
+          ["An internationally mobile builder-operator with more than 25 years across luxury hospitality, property development, film, creative business and international operations.", "An internationally mobile builder operator with a background in computer systems engineering and more than 25 years across luxury hospitality, property development, film and creative business. I have also worked as a television presenter and published a fashion and lifestyle magazine."],
           ["Some things are better discussed privately.", "Your life, running smoother."],
           ["A private conversation.", "Your time. Your headspace."],
           ["For a confidential first conversation, write to kym90nize@gmail.com.", "I take care of what you ask, with dependable availability and discretion, so your work and surroundings run smoothly. You get your time and your headspace back. For a confidential first conversation, write to kym90nize@gmail.com."],
@@ -58,6 +58,7 @@ export default {
           ["“You might call it pressure. I call it oxygen.”", ""],
           ["“Some people find their rhythm in routine.<br/><span style=\"color:var(--accent)\">I find mine in motion.”</span>", ""],
           ["builder-operator", "builder operator"],
+          ["I have worked as a television presenter and published a fashion and lifestyle magazine.", "I have worked as a television presenter and published a fashion and lifestyle magazine."],
           ["last-minute", "last minute"],
           ["dry-season", "dry season"],
           ["two-kilometre", "two kilometre"],
