@@ -107,10 +107,10 @@ export default {
 
         // Final editorial rhythm pass, preserving visuals and privacy settings.
         const finalCopy = [
-          ["The person I'm looking for is a high-end individual, someone with a full, complicated life who values their time. I work smart and quick, and I make their thinking, their work and their surroundings run smoother.", "I want to work for one person: someone with a full, complicated life who values their time. I work quickly and precisely, making their thinking, work and surroundings run smoother."],
-          ["Property improvement, commercial operations, guest experience and multidisciplinary teams.", "I oversaw property improvements, commercial operations and guest experience while leading multidisciplinary teams."],
+          ["The person I'm looking for is a high-end individual, someone with a full, complicated life who values their time. I work smart and quick, and I make their thinking, their work and their surroundings run smoother.", "I want to work for one person: someone with a full, complicated life who values their time. I work quickly and precisely, and I make their thinking, work and surroundings run smoother."],
+          ["Property improvement, commercial operations, guest experience and multidisciplinary teams.", "My work has covered property improvements, commercial operations, guest experience, and leadership of multidisciplinary teams."],
           ["<b>Another Bali villa project:</b>", "<b>A further private villa development in Bali:</b>"],
-          ["Close enough to understand the context. Independent enough to execute. Experienced enough to recognise when a decision requires specialist advice.", "I stay close to the context while working independently. I also know when to bring in specialist advice."],
+          ["Close enough to understand the context. Independent enough to execute. Experienced enough to recognise when a decision requires specialist advice.", "I understand the wider context, take responsibility for execution, and recognise when specialist advice is needed."],
           ["The thinking has a soundtrack.", "An optional soundtrack."],
           ["Optional listening · Creative direction by Kim René van Nie", "Optional listening"],
           ["Personally supported director McGuckian, Kathy Bates, Geraldine Chaplin and costume designer Yvonne Blake. Blake, an Academy Award winner, also won the film’s 2005 Goya for Best Costume Design.", "Personally supported director McGuckian, Kathy Bates, Geraldine Chaplin and costume designer Yvonne Blake, who won the film’s 2005 Goya for Best Costume Design."],
