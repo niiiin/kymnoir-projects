@@ -104,6 +104,22 @@ export default {
           'Worked in event production logistics for a three day Unilever leadership event in Almería, Spain, produced by Signum Niehe Events for around 1,000 participants.',
           'Worked in event production logistics for a Unilever leadership event in Almería, Spain, for around 1,000 participants.'
         );
+
+        // Final editorial rhythm pass, preserving visuals and privacy settings.
+        const finalCopy = [
+          ["The person I'm looking for is a high-end individual, someone with a full, complicated life who values their time. I work smart and quick, and I make their thinking, their work and their surroundings run smoother.", "I want to work for one person: someone with a full, complicated life who values their time. I work quickly and precisely, making their thinking, work and surroundings run smoother."],
+          ["Property improvement, commercial operations, guest experience and multidisciplinary teams.", "I oversaw property improvements, commercial operations and guest experience while leading multidisciplinary teams."],
+          ["<b>Another Bali villa project:</b>", "<b>A further private villa development in Bali:</b>"],
+          ["Close enough to understand the context. Independent enough to execute. Experienced enough to recognise when a decision requires specialist advice.", "I stay close to the context while working independently. I also know when to bring in specialist advice."],
+          ["The thinking has a soundtrack.", "An optional soundtrack."],
+          ["Optional listening · Creative direction by Kim René van Nie", "Optional listening"],
+          ["Personally supported director McGuckian, Kathy Bates, Geraldine Chaplin and costume designer Yvonne Blake. Blake, an Academy Award winner, also won the film’s 2005 Goya for Best Costume Design.", "Personally supported director McGuckian, Kathy Bates, Geraldine Chaplin and costume designer Yvonne Blake, who won the film’s 2005 Goya for Best Costume Design."],
+          ["Raised in a Dutch film and television family. My father was director René van Nie. My mother worked in production and later became a TV producer and director, as did my stepfather. My sister is actress Nada van Nie.", "Raised in a Dutch film and television family. My father was director René van Nie. My mother worked in production before becoming a television producer and director. My stepfather also worked in television. My sister is actress Nada van Nie."],
+          ["Your time. Your headspace.", "A confidential conversation."],
+          ["You get your time and your headspace back. For a confidential first conversation, write to kym90nize@gmail.com.", "For a confidential first conversation, write to kym90nize@gmail.com."],
+          ["<div class=\"portrait-footnote\">A private introduction.</div>", ""]
+        ];
+        for (const [a, b] of finalCopy) portraitHtml = portraitHtml.replaceAll(a, b);
         return new Response(portraitHtml, { headers: {
           "content-type": "text/html; charset=utf-8",
           "cache-control": "public, max-age=300",
