@@ -33,6 +33,47 @@ export default {
         for (const [oldText, newText] of revisions) {
           portraitHtml = portraitHtml.replace(oldText, newText);
         }
+
+        // Editorial revisions approved 22 October 2026. Only text and existing HTML,
+        // leaving media, typography, page layout, and noindex untouched.
+        const editorial = [
+          ["I make complicated things<br/><em>happen quietly.</em>", "I make complicated things happen quietly."],
+          ["I make complicated things happen quietly, so the person I work for never has to think about them.", "I make complicated things happen quietly, so the person I work for never has to think about them."],
+          ["Discreet by habit. What I see stays with me.", "What I see stays with me."],
+          ["My role is not to compete for the spotlight. It is to anticipate what the principal needs, reduce avoidable friction and create room for their most important decisions.", "My role is to anticipate what the principal needs, reduce avoidable friction and create room for their most important decisions."],
+          ["Discreet · Mobile · Accountable", "Discreet · Mobile · Accountable · Available"],
+          ["Born in Amsterdam, the Netherlands · ", ""],
+          ["Written and produced by Kim René van Nie (KYM NØIR). AI was used to fine-tune the production.", "Written and produced by KYM NØIR, sung by a featured voice."],
+          ["approximately 20 keys", "20 keys"],
+          ["An internationally mobile builder-operator with more than 25 years across luxury hospitality, property development, film, creative business and international operations.", "An internationally mobile builder operator with a background in computer systems engineering and more than 25 years across luxury hospitality, property development, film, publishing, television, creative business and international operations."],
+          ["Some things are better discussed privately.", "Your life, running smoother."],
+          ["A private conversation.", "Your time. Your headspace."],
+          ["For a confidential first conversation, write to kym90nize@gmail.com.", "I take care of what you ask, with dependable availability and discretion, so your work and surroundings run smoothly. You get your time and your headspace back. For a confidential first conversation, write to kym90nize@gmail.com."],
+          ["When dry-season village water supplies run short, I arrange tanker deliveries to keep reserves sufficient so guests never notice. At the beginning there was no adequate electricity connection. With approval from the village chief and help from local authorities, I arranged a temporary two-kilometre connection from a village building, allowing the first villas to operate. Persistent coordination later helped secure road improvements, water pipes, a water source and permanent PLN power poles along the route—benefiting nearby households and making further resort development possible.", "When the village water supply runs short, I arrange tanker deliveries so guests never notice. To start operating the first villas without adequate electricity, I arranged a temporary two kilometre connection with village approval. Continued coordination helped secure permanent PLN electricity, better access roads and water infrastructure, benefiting neighbours and enabling the resort's expansion."],
+          ["Personally hosted high-profile guests, including governors and members of parliament. Arranged discreet, highly personalised services for private guests, including specialist transport and security coordination when requested and appropriately authorised.", "Personally hosted prominent private guests, including governors and members of parliament. Where requested and authorised, arranged discreet services including helicopter transport, police escorts and security coordination."],
+          ["The wider cast included Academy Award winners Robert De Niro and F. Murray Abraham, as well as Harvey Keitel; these names are cast context, not a claim of personal transport.", ""],
+          ["Signum Niehe Events received the Silver Gouden Giraffe for this event in 2003. This was an agency award, not an individual award.", ""],
+          ["<a href=\"tel:+6282323141350\">+62 823 2314 1350</a>", ""],
+          ["<div class=\"portrait-footnote\">A creative portrait of how I work. <em>“You might call it pressure. I call it oxygen.”</em></div>", "<div class=\"portrait-footnote\">A private introduction.</div>"],
+          ["“You might call it pressure. I call it oxygen.”", ""],
+          ["“Some people find their rhythm in routine.<br/><span style=\"color:var(--accent)\">I find mine in motion.”</span>", ""],
+          ["builder-operator", "builder operator"],
+          ["last-minute", "last minute"],
+          ["dry-season", "dry season"],
+          ["two-kilometre", "two kilometre"],
+          ["high-profile", "prominent"],
+          ["High-profile", "Prominent"],
+          ["event-production", "event production"],
+          ["Western-themed", "Western themed"],
+          ["team-building", "team building"],
+          ["three-day", "three day"],
+          ["on-location", "on location"],
+          ["fine-tune", "refine"],
+          ["2014—", "2014 "]
+        ];
+        for (const [a, b] of editorial) portraitHtml = portraitHtml.replaceAll(a, b);
+        // Keep markup and embedded media intact; remove only visible punctuation and personal phone links.
+        portraitHtml = portraitHtml.replaceAll("route—benefiting", "route, benefiting");
         return new Response(portraitHtml, { headers: {
           "content-type": "text/html; charset=utf-8",
           "cache-control": "public, max-age=300",
