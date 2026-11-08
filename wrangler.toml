@@ -16,3 +16,8 @@ zone_name = "kymnoir.com"
 [[routes]]
 pattern = "kymnoir.com/kimvannie"
 zone_name = "kymnoir.com"
+
+# Recruiter introduction and PDF CV downloads (review branch only)
+[[routes]]
+pattern = "kymnoir.com/kimvannie/*"
+zone_name = "kymnoir.com"
