@@ -47,7 +47,7 @@ function makePdf(which) {
   place('KIM RENE VAN NIE',21,true); y-=7;
   for(const l of wrap(d.title,75))place(l,10,true);
   place('Bali, Indonesia  |  Dutch / EU citizen  |  Internationally mobile',9);
-  place('kym90nize@gmail.com  |  +62 823 2314 1350',9);y-=12;
+  place('Confidential enquiries: kym90nize@gmail.com',9);y-=12;
   for(const [heading,body] of d.groups){
     place(heading,10,true);
     for(const l of wrap(body,95))place(l,9.5);
