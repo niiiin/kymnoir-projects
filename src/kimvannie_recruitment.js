@@ -55,7 +55,7 @@ function makePdf(which) {
     for(const w of safe(s).split(/\s+/)){if((line+' '+w).trim().length>max){if(line)a.push(line);line=w;}else line=(line+' '+w).trim();}
     if(line)a.push(line);return a;
   }
-  place('KIM RENE VAN NIE',21,true); y-=7;
+  place('KIM RENÉ VAN NIE',21,true); y-=7;
   for(const l of wrap(d.title,75))place(l,10,true);
   place('Bali, Indonesia  |  Dutch / EU citizen  |  Internationally mobile',9);
   place('Confidential enquiries: kym90nize@gmail.com',9);y-=12;
