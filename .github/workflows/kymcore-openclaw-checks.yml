@@ -1,0 +1,25 @@
+name: KYM CORE OpenClaw offline checks
+on:
+  pull_request:
+    paths:
+      - 'openclaw/**'
+      - '.github/workflows/kymcore-openclaw-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Python unit tests
+        run: python3 -m unittest discover -s openclaw/tests -v
+      - name: Check bootstrap safety
+        run: python3 openclaw/tools/validate_bootstrap.py
+      - name: Syntax-check shell scripts
+        run: |
+          bash -n openclaw/scripts/preflight.sh
+          bash -n openclaw/scripts/install-on-approved-host.sh
