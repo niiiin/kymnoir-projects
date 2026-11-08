@@ -1,3 +1,4 @@
+import { executiveResponse } from "./kimvannie_recruitment.js";
 import { growHtml } from "./grow.js";
 import { landscapeHtml } from "./landscape.js";
 import { kymGmHtml } from "./kymgm.js";
@@ -11,6 +12,8 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, "") || "/";
+    const executive = executiveResponse(path);
+    if (executive) return executive;
     if (path === "/") {
       return new Response(mainSiteHtml, {
         headers: {
@@ -120,6 +123,13 @@ export default {
           ["<div class=\"portrait-footnote\">A private introduction.</div>", ""]
         ];
         for (const [a, b] of finalCopy) portraitHtml = portraitHtml.replaceAll(a, b);
+        // Add a discreet recruiting link while leaving the original portrait/media intact.
+        portraitHtml = portraitHtml.replace(
+          '</body>',
+          '<aside style="max-width:920px;margin:48px auto;padding:24px;border-top:1px solid #77736a;text-align:center;color:#ddd;font:14px Arial,sans-serif"><div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c7aa79;margin-bottom:13px">Executive curriculum & confidential introduction</div><a href="/kimvannie/recruitment" style="color:#efdfbe;text-decoration:underline">View two tailored CVs and download PDF profiles</a></aside></body>'
+        );
+        // Latest source reconciliation: 15 operational units; do not present 20 as current inventory.
+        portraitHtml = portraitHtml.replaceAll('20 keys','15 operating accommodation units');
         return new Response(portraitHtml, { headers: {
           "content-type": "text/html; charset=utf-8",
           "cache-control": "public, max-age=300",
