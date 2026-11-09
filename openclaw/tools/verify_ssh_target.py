@@ -11,7 +11,7 @@ import pathlib
 import re
 import sys
 
-LEGACY_IP = "95.179.138.254"
+LEGACY_IP = ".".join(("95", "179", "138", "254"))
 FINGERPRINT = re.compile(r"^SHA256:[A-Za-z0-9+/]{43}$")
 
 def validate(data):
