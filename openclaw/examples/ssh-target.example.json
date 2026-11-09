@@ -1,0 +1,10 @@
+{
+  "provider": "vultr",
+  "account_label": "90nize",
+  "host": "REPLACE_WITH_NEW_SERVER_IP",
+  "ssh_user": "kymdeploy",
+  "host_key_fingerprint": "REPLACE_WITH_INDEPENDENTLY_VERIFIED_SHA256_FINGERPRINT",
+  "host_key_verified_out_of_band": false,
+  "owner_approved": false,
+  "deployment_enabled": false
+}
