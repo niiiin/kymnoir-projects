@@ -17,6 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run Python unit tests
         run: python3 -m unittest discover -s openclaw/tests -v
+      - name: Validate agent isolation manifest
+        run: python3 openclaw/tools/verify_agent_boundaries.py openclaw/examples/agent-boundaries.example.json
       - name: Check bootstrap safety
         run: python3 openclaw/tools/validate_bootstrap.py
       - name: Syntax-check shell scripts
