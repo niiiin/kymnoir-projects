@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "mode": "development_only",
+  "gateway": {
+    "bind": "loopback",
+    "public_dashboard": false,
+    "remote_access": "ssh_tunnel_or_private_network_only"
+  },
+  "agents": [
+    {
+      "id": "executive",
+      "workspace": "workspaces/executive",
+      "allowed": [
+        "summarize_approved_sources",
+        "draft"
+      ],
+      "denied": [
+        "send",
+        "publish",
+        "payments",
+        "production_deploy",
+        "read_wallets"
+      ]
+    },
+    {
+      "id": "atlas",
+      "workspace": "workspaces/atlas",
+      "allowed": [
+        "research_public_sources",
+        "draft",
+        "propose_code"
+      ],
+      "denied": [
+        "send",
+        "publish",
+        "payments",
+        "production_deploy",
+        "read_wallets"
+      ]
+    },
+    {
+      "id": "sanglung",
+      "workspace": "workspaces/sanglung",
+      "allowed": [
+        "draft",
+        "research_public_sources"
+      ],
+      "denied": [
+        "send",
+        "publish",
+        "payments",
+        "production_deploy",
+        "read_guest_records"
+      ]
+    },
+    {
+      "id": "technical",
+      "workspace": "workspaces/technical",
+      "allowed": [
+        "read_repo",
+        "propose_code",
+        "write_feature_branch"
+      ],
+      "denied": [
+        "send",
+        "publish",
+        "payments",
+        "production_deploy",
+        "read_wallets"
+      ]
+    }
+  ],
+  "approval_required": [
+    "external_messages",
+    "publications",
+    "spending",
+    "production_changes",
+    "credential_changes",
+    "sensitive_data_export"
+  ],
+  "credentials_in_repository": false
+}
