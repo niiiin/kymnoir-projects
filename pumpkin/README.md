@@ -2,8 +2,8 @@
 
 A responsive, static first preview for the Pumpkin Your Day companion app.
 
-- Path in this repository: \`pumpkin/index.html\`
-- Planned live URL: \`https://kymcore.online/pumpkin/\`
+- Path in this repository: `pumpkin/index.html`
+- Planned live URL: `https://kymcore.online/pumpkin/`
 - Hosting: existing Nginx instance on the separate KYM CORE Amsterdam Ubuntu VPS.
 - Design: warm, friendly, orange/cream and accessible on phone and desktop.
 - Functional demo: eight activity categories, Surprise Me, local interactive adaptive 2-question flow.
@@ -15,14 +15,14 @@ A responsive, static first preview for the Pumpkin Your Day companion app.
 
 From a root shell on the KYM CORE Amsterdam server:
 
-\`\`\`bash
+```bash
 sudo mkdir -p /var/www/html/pumpkin &&
 sudo curl -fLSs --retry 3 \
   'https://raw.githubusercontent.com/niiiin/kymnoir-projects/refs/heads/feature/pumpkin-app-bootstrap/pumpkin/index.html' \
   -o /var/www/html/pumpkin/index.html
-\`\`\`
+```
 
-Once copied, browse to \`https://kymcore.online/pumpkin/\`. This command does not modify the existing \`/var/www/html/index.html\` KYM CORE landing page and does not touch \`kymnoir.com\`.
+Once copied, browse to `https://kymcore.online/pumpkin/`. This command does not modify the existing `/var/www/html/index.html` KYM CORE landing page and does not touch `kymnoir.com`.
 
 ## Next engineering milestones
 
