@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "mode": "disabled_until_owner_approval",
+  "channel": "telegram",
+  "bot_token_source": "runtime_secret_only",
+  "bot_token": "",
+  "enabled": false,
+  "dm_policy": "pairing",
+  "group_policy": "disabled",
+  "allowed_user_ids": [],
+  "allowed_chat_ids": [],
+  "allow_group_invites": false,
+  "send_without_approval": false,
+  "external_tool_calls": false,
+  "log_message_bodies": false,
+  "webhook_public_endpoint": false,
+  "owner_approval_record": "",
+  "notes": "Planning manifest only; not an OpenClaw config. Runtime schema must be checked against the installed version."
+}
