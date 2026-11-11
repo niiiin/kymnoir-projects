@@ -55,6 +55,12 @@
     .activity{appearance:none;text-align:left;border:1px solid #f3ddc8;border-radius:23px;background:#ffffffc9;padding:19px;min-height:134px;display:flex;flex-direction:column;justify-content:space-between;color:var(--ink);transition:transform .15s,border-color .15s,background .15s;box-shadow:0 4px 13px #94552e0b}
     .activity:hover,.activity[aria-pressed="true"]{background:#fff2e4;border-color:#f7aa77}
     .activity .emoji{font-size:32px}.activity b{font-size:15px;letter-spacing:-.2px}
+    .music-feature{margin-top:24px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:21px;border:1px solid #f3d5b6;border-radius:26px;background:linear-gradient(110deg,#ffe5c5,#fff0df);padding:23px 26px;box-shadow:0 12px 25px #96552e0f}
+    .music-symbol{display:grid;place-items:center;width:74px;height:74px;background:#fff7eb;border-radius:23px;font-size:36px}
+    .music-feature h3{font-size:23px;letter-spacing:-.5px;margin:3px 0}
+    .music-feature p{font-size:14px;color:#816553;margin:0}
+    .music-link{display:inline-block;white-space:nowrap;text-decoration:none;background:#ee8448;color:white;padding:12px 17px;border-radius:16px;font-weight:800;box-shadow:0 7px 15px #c477443e}
+    @media(max-width:760px){.music-feature{grid-template-columns:auto 1fr;gap:14px;padding:18px}.music-symbol{width:55px;height:55px;font-size:27px;border-radius:17px}.music-feature h3{font-size:20px}.music-link{grid-column:1/-1;text-align:center}}
     .workspace{display:grid;grid-template-columns:1fr .78fr;gap:21px;margin-top:26px;align-items:start}
     .chat{background:white;border:1px solid #efddcb;border-radius:26px;box-shadow:var(--shadow);overflow:hidden}
     .chat-heading{padding:19px 21px;display:flex;align-items:center;gap:11px;border-bottom:1px solid #f5e8da}
@@ -103,6 +109,11 @@
     <section aria-labelledby="activities-title">
       <div class="section-label"><h2 id="activities-title">What sounds good today?</h2><span class="tiny">Pick a mood, not a perfect plan.</span></div>
       <div class="activities" id="activities"></div>
+    </section>
+    <section class="music-feature" aria-label="Music and Mindfulness">
+      <span class="music-symbol" aria-hidden="true">🎵</span>
+      <div><div class="eyebrow">Original sounds by Pumpkin</div><h3>Music &amp; Mindfulness</h3><p>Choose a mood, discover our original music, and find a moment that's yours.</p></div>
+      <a class="music-link" href="./music/">Explore music →</a>
     </section>
     <section class="workspace" aria-label="Talk to Pumpkin">
       <div class="chat" id="chat">
