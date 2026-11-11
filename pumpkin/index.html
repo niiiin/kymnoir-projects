@@ -61,6 +61,21 @@
     .music-feature p{font-size:14px;color:#816553;margin:0}
     .music-link{display:inline-block;white-space:nowrap;text-decoration:none;background:#ee8448;color:white;padding:12px 17px;border-radius:16px;font-weight:800;box-shadow:0 7px 15px #c477443e}
     @media(max-width:760px){.music-feature{grid-template-columns:auto 1fr;gap:14px;padding:18px}.music-symbol{width:55px;height:55px;font-size:27px;border-radius:17px}.music-feature h3{font-size:20px}.music-link{grid-column:1/-1;text-align:center}}
+
+    .checkin{display:grid;grid-template-columns:75px minmax(0,1fr);gap:20px;align-items:start;background:#fff;border:1px solid #efddcb;box-shadow:var(--shadow);border-radius:28px;padding:24px 27px;margin:9px 0 31px}
+    .checkin-mascot{background:#fff0dd;border-radius:25px;width:75px;height:75px;font-size:42px;display:grid;place-items:center}
+    .checkin h2{font-size:28px;margin:3px 0 8px}
+    .checkin p{color:#816957;margin:0 0 14px}
+    .checkin-buttons{display:flex;flex-wrap:wrap;gap:9px}
+    .checkin-buttons button,.checkin-buttons a{border:1px solid #f0d7bf;background:#fff7ec;color:#985c37;border-radius:15px;padding:11px 13px;font-size:14px;font-weight:800;text-decoration:none;cursor:pointer}
+    .checkin-buttons button:hover,.checkin-buttons a:hover{background:#ffe7c9;border-color:#eca770}
+    .checkin-caption{display:block;margin-top:12px;font-size:12px;color:#9b8376}
+    .plan{background:#fff9f0;border:1px solid #eedac5;border-radius:17px;margin:13px 0;padding:14px 17px}
+    .plan li{margin:5px 0;color:#70584e}
+    .plan label{cursor:pointer}
+    .plan input{width:auto;margin-right:9px;accent-color:#ee884d}
+    .plan strong{color:#6a493b}
+    @media(max-width:760px){.checkin{grid-template-columns:1fr;padding:20px}.checkin-mascot{width:55px;height:55px;border-radius:18px;font-size:30px}.checkin h2{font-size:24px}.checkin-buttons button,.checkin-buttons a{flex:1 1 135px;text-align:center}}
     .workspace{display:grid;grid-template-columns:1fr .78fr;gap:21px;margin-top:26px;align-items:start}
     .chat{background:white;border:1px solid #efddcb;border-radius:26px;box-shadow:var(--shadow);overflow:hidden}
     .chat-heading{padding:19px 21px;display:flex;align-items:center;gap:11px;border-bottom:1px solid #f5e8da}
@@ -104,6 +119,23 @@
       <div class="hero-art" role="img" aria-label="Friendly smiling orange pumpkin in warm sunshine">
         <div class="sun"></div><span class="small-cloud">☁</span><span class="spark one">✦</span><span class="spark two">✧</span>
         <div class="mascot"><div class="stem"></div><div class="pumpkin"></div><div class="eye left"></div><div class="eye right"></div><div class="cheek left"></div><div class="cheek right"></div><div class="smile"></div></div><span class="mug">☕</span>
+      </div>
+    </section>
+
+    <section class="checkin" aria-label="Start your day with Pumpkin">
+      <span class="checkin-mascot" aria-hidden="true">🎃</span>
+      <div>
+        <div class="eyebrow">A little help, a happier day</div>
+        <h2>Hey you. I'm Pumpkin. ☀️</h2>
+        <p id="checkin-text" aria-live="polite">Don't know what to do next? Want a hand making plans? We'll find a small, lovely way forward together.</p>
+        <div id="checkin-result" aria-live="polite"></div>
+        <div class="checkin-buttons" id="checkin-buttons">
+          <button type="button" data-checkin="ideas">✨ Give me an idea</button>
+          <button type="button" data-checkin="plan">🗓️ Help plan my day</button>
+          <button type="button" data-checkin="boost">💛 I need a little lift</button>
+          <button type="button" data-checkin="calm">🌿 Help me unwind</button>
+        </div>
+        <small class="checkin-caption">Interactive early preview · Live AI conversation is not switched on yet.</small>
       </div>
     </section>
     <section aria-labelledby="activities-title">
@@ -173,6 +205,94 @@
   document.getElementById("start").addEventListener("click",()=>{add("What are you in the mood for? Tap a category or tell me a little about your day.");setChoices([["Relax","relax"],["Explore","explore"],["Create","create"]],(label,v)=>select(v,label));focusChat();});
   for(const id of ["random","another"]){document.getElementById(id).addEventListener("click",surprise);}
   document.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>{const val=b.dataset.answer;if(val==="surprise")surprise();else{state.category=val==="low"?"relax":"explore";state.energy=val;add(b.textContent,true);askTime();focusChat();}}));
+
+  // A deliberately transparent, instant companion preview.
+  // Real personalization will come from our authenticated, server-side AI flow.
+  const checkinText=document.getElementById("checkin-text");
+  const checkinButtons=document.getElementById("checkin-buttons");
+  const checkinResult=document.getElementById("checkin-result");
+  function checkinSay(text,actions){
+    checkinText.textContent=text;
+    checkinResult.replaceChildren();
+    checkinButtons.replaceChildren();
+    actions.forEach(([caption,action])=>{
+      const b=document.createElement("button");
+      b.type="button";b.textContent=caption;b.addEventListener("click",action);checkinButtons.appendChild(b);
+    });
+  }
+  function resetCheckin(){
+    checkinSay("I’m here when you’d like a fresh idea or a gentle nudge. Which way shall we go?",[
+      ["✨ Another idea",()=>startIdeas()],["🗓️ Make a plan",()=>startPlan()],["🌿 Unwind",()=>startCalm()]
+    ]);
+  }
+  function startIdeas(){
+    checkinSay("No perfect plan needed. Would you rather stay cozy or get out into the world?",[
+      ["🏡 Stay in",()=>select("create","Something creative at home")],
+      ["🚶 Head outside",()=>select("explore","A little adventure outside")],
+      ["🎁 Surprise me",()=>surprise()]
+    ]);
+  }
+  function makePlan(energy){
+    const plans={
+      soft:["Begin with a small comfort: tea, water or fresh air.","Choose one useful task and give it a gentle ten-minute start.","Make space for one enjoyable moment. Rest also counts."],
+      steady:["Pick your one most important task, not ten.","Give yourself one refreshing break or walk.","Plan a little treat or connection to end the day well."],
+      lively:["Start with the task that moves something forward.","Try an active or creative detour today.","End with something you can look forward to, however small."]
+    };
+    checkinText.textContent="Here’s our first little plan. No pressure to do it all. Tap something when you’ve done it.";
+    checkinButtons.replaceChildren();
+    checkinResult.replaceChildren();
+    const box=document.createElement("div");box.className="plan";
+    const heading=document.createElement("strong");heading.textContent="Your three little wins";
+    const list=document.createElement("ol");list.style.paddingLeft="23px";
+    plans[energy].forEach(step=>{
+      const li=document.createElement("li"),label=document.createElement("label"),tick=document.createElement("input");
+      tick.type="checkbox";
+      tick.addEventListener("change",()=>{
+        label.style.textDecoration=tick.checked?"line-through":"none";
+        label.style.opacity=tick.checked?".6":"1";
+        if(tick.checked) {
+          const done=list.querySelectorAll("input:checked").length;
+          if(done===3)checkinText.textContent="Three little wins! That's your day, your way. Nicely done. 💛";
+        }
+      });
+      label.append(tick,document.createTextNode(step));li.appendChild(label);list.appendChild(li);
+    });
+    box.append(heading,list);checkinResult.appendChild(box);
+    const b=document.createElement("button");b.type="button";b.textContent="✨ Pick something fun next";b.addEventListener("click",startIdeas);checkinButtons.appendChild(b);
+    const again=document.createElement("button");again.type="button";again.textContent="↺ Start again";again.addEventListener("click",startPlan);checkinButtons.appendChild(again);
+  }
+  function startPlan(){
+    checkinSay("We'll make it manageable and still leave a little room for joy. How's your energy?",[
+      ["🌙 Low today",()=>makePlan("soft")],["🌤️ Doing okay",()=>makePlan("steady")],["☀️ Ready to go",()=>makePlan("lively")]
+    ]);
+  }
+  function startBoost(){
+    checkinSay("I'm with you on this one. Do you want a tiny win, a playful distraction, or a lovely thought?",[
+      ["✅ A tiny win",()=>{
+        checkinSay("Try the two-minute magic trick: tidy one small surface or send one message you've been putting off. That's already momentum. 💛",[["Another idea",startIdeas],["Make a gentle plan",startPlan]]);
+      }],
+      ["🎈 Something playful",()=>{
+        checkinSay("Mini challenge: find three things around you that look like they belong in a movie scene. Give the best one a ridiculous title. 🎬",[["Another idea",startIdeas],["Surprise me",surprise]]);
+      }],
+      ["💛 A kind thought",()=>{
+        checkinSay("You don't need to make the whole day amazing. One pleasant little moment is a very good start. Would you like some calming music?",[["🎵 Music & mindfulness",()=>{window.location.href="./music/";}],["Make a small plan",startPlan]]);
+      }]
+    ]);
+  }
+  function startCalm(){
+    checkinSay("A softer moment sounds lovely. Would music or a quiet little activity feel better?",[
+      ["🎵 Play our mindfulness music",()=>{window.location.href="./music/";}],
+      ["🌿 A quiet idea",()=>select("relax","Something calm")],
+      ["🗓️ Plan a gentler day",startPlan]
+    ]);
+  }
+  document.querySelectorAll("[data-checkin]").forEach(btn=>btn.addEventListener("click",()=>{
+    const action=btn.dataset.checkin;
+    if(action==="ideas")startIdeas();
+    else if(action==="plan")startPlan();
+    else if(action==="boost")startBoost();
+    else if(action==="calm")startCalm();
+  }));
   document.getElementById("chat-form").addEventListener("submit",e=>{e.preventDefault();const input=document.getElementById("message");const text=input.value.trim().slice(0,500);if(!text)return;add(text,true);input.value="";const low=text.toLowerCase();if(/\b(food|cook|eat|hungry|dinner|lunch|breakfast)\b/.test(low)){state.category="eat";askEnergy();}else if(/\b(walk|outside|explore|travel|adventure)\b/.test(low)){state.category="explore";askEnergy();}else if(/\b(tired|rest|sleep|relax|calm)\b/.test(low)){state.category="relax";askEnergy();}else if(/\b(art|draw|write|music|creative)\b/.test(low)){state.category="create";askEnergy();}else if(/\b(surprise|bored)\b/.test(low)){surprise();}else{add("I love that you're here! I'm a tiny interactive preview for now, not the full AI yet. Shall we find you something lovely to do?");setChoices([["Let's go! ✨","start"],["Surprise me","surprise"]],(label,v)=>{if(v==="surprise")surprise();else{state.category="relax";askEnergy();}});}});
 })();
 </script>
