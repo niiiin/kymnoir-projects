@@ -111,6 +111,7 @@ const title=document.getElementById("playerTitle");
 const description=document.getElementById("playerDescription");
 const note=document.getElementById("playerNote");
 const audio=document.getElementById("audio");
+audio.addEventListener("error",()=>{note.textContent="The recording is not available on the server yet. Please try again after upload.";audio.hidden=true;});
 const count=document.getElementById("playlistCount");
 const playlistTitle=document.getElementById("playlistTitle");
 const icons={calm:"🌿",lift:"☀️",focus:"✨",evening:"🌅",mindfulness:"🧘",sleep:"🌙"};
@@ -132,7 +133,7 @@ function showTrack(t) {
   }
 }
 function render() {
-  const matching=tracks.filter(t=>selectedMood==="all"||t.mood===selectedMood);
+  const matching=tracks.filter(t=>selectedMood==="all"||t.mood===selectedMood||(Array.isArray(t.moods)&&t.moods.includes(selectedMood)));
   playlistTitle.textContent=selectedMood==="all"?"The listening collection":"Your selected mood";
   count.textContent=matching.length+" original ideas · "+matching.filter(t=>safeSource(t.src)).length+" ready to play";
   list.replaceChildren();
@@ -144,7 +145,7 @@ function render() {
     const strong=document.createElement("strong");strong.textContent=t.title;
     const small=document.createElement("small");small.textContent=t.type+" · "+t.description;
     text.append(strong,small);
-    const chip=document.createElement("span");chip.className="chip";chip.textContent=safeSource(t.src)?"Listen":"Coming soon";
+    const chip=document.createElement("span");chip.className="chip";chip.textContent=safeSource(t.src)?((t.duration?t.duration+" · ":"")+"Listen"):"Coming soon";
     b.append(icon,text,chip);b.addEventListener("click",()=>{document.querySelectorAll(".track").forEach(x=>x.removeAttribute("aria-current"));b.setAttribute("aria-current","true");showTrack(t);});
     list.appendChild(b);
   });
