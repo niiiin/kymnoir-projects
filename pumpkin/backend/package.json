@@ -1,0 +1,13 @@
+{
+  "name": "pumpkin-your-day-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Server-side AI prototype for Pumpkin Your Day",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}
