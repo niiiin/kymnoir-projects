@@ -1,7 +1,20 @@
 {
-  "version": 1,
-  "note": "Working playlist concepts only. No audio has been uploaded or published yet.",
+  "version": 2,
+  "note": "First original recording prepared for deployment. The audio file must be uploaded separately to the Amsterdam server before the updated catalog goes live. Other entries are concepts.",
   "tracks": [
+    {
+      "id": "a-little-room-to-breathe",
+      "title": "A Little Room to Breathe",
+      "mood": "mindfulness",
+      "moods": [
+        "mindfulness",
+        "calm"
+      ],
+      "type": "Guided mindfulness",
+      "description": "Six gentle minutes to pause, breathe and be present, with softly spoken guidance and original ambient music.",
+      "duration": "5:59",
+      "src": "audio/a-little-room-to-breathe.mp3"
+    },
     {
       "id": "first-light",
       "title": "First Light",
