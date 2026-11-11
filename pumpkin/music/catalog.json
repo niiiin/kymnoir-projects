@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "note": "Working playlist concepts only. No audio has been uploaded or published yet.",
+  "tracks": [
+    {
+      "id": "first-light",
+      "title": "First Light",
+      "mood": "lift",
+      "type": "Mood music",
+      "description": "A gentle, positive start for early mornings.",
+      "duration": null,
+      "src": null
+    },
+    {
+      "id": "quiet-tide",
+      "title": "Quiet Tide",
+      "mood": "calm",
+      "type": "Mood music",
+      "description": "Slow, spacious sounds for a softer moment.",
+      "duration": null,
+      "src": null
+    },
+    {
+      "id": "open-window",
+      "title": "Open Window",
+      "mood": "focus",
+      "type": "Mood music",
+      "description": "An unobtrusive backdrop for ideas and concentration.",
+      "duration": null,
+      "src": null
+    },
+    {
+      "id": "late-golden",
+      "title": "Late Golden",
+      "mood": "evening",
+      "type": "Mood music",
+      "description": "A warm unwind for the end of the day.",
+      "duration": null,
+      "src": null
+    },
+    {
+      "id": "slow-breath",
+      "title": "Slow Breath",
+      "mood": "mindfulness",
+      "type": "Mindfulness session",
+      "description": "An original, gently paced breathing experience.",
+      "duration": null,
+      "src": null
+    },
+    {
+      "id": "drift-away",
+      "title": "Drift Away",
+      "mood": "sleep",
+      "type": "Mindfulness music",
+      "description": "A long, unhurried soundtrack for bedtime.",
+      "duration": null,
+      "src": null
+    }
+  ]
+}
