@@ -16,3 +16,13 @@ zone_name = "kymnoir.com"
 [[routes]]
 pattern = "kymnoir.com/kimvannie"
 zone_name = "kymnoir.com"
+
+# KYM NØIR Villa Giveaway; no existing project routes changed.
+[[routes]]
+pattern = "kymnoir.com/giveaway"
+zone_name = "kymnoir.com"
+
+[[routes]]
+pattern = "kymnoir.com/giveaway/*"
+zone_name = "kymnoir.com"
+
