@@ -1,0 +1,27 @@
+name: OpenClaw offline safety checks
+
+# Development-only: no deployment, secrets, external services, or production changes.
+on:
+  push:
+    branches:
+      - feature/kymcore-openclaw-bootstrap
+    paths:
+      - 'openclaw/**'
+      - '.github/workflows/openclaw-offline-safety.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  planning-manifests:
+    name: Validate planning manifests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run offline standard-library tests
+        run: python3 -B openclaw/tests/test_planning_manifests.py
