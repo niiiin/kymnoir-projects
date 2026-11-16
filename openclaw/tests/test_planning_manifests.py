@@ -73,5 +73,23 @@ class PlanningManifestTests(unittest.TestCase):
         self.assertEqual(doc["owner_approval_record"], "")
 
 
+    def test_ci_workflow_remains_offline_and_read_only(self):
+        """Guard against accidental deployment or privilege expansion in CI."""
+        workflow = (ROOT.parent / ".github" / "workflows" /
+                    "openclaw-offline-safety.yml").read_text(encoding="utf-8")
+        self.assertIn("feature/kymcore-openclaw-bootstrap", workflow)
+        self.assertIn("openclaw/tests/test_planning_manifests.py", workflow)
+        self.assertIn("contents: read", workflow)
+        self.assertIn("persist-credentials: false", workflow)
+        self.assertIn("timeout-minutes:", workflow)
+        for forbidden in (
+            "pull_request_target:", "deployment:", "environment:",
+            "secrets.", "id-token: write", "contents: write",
+            "packages: write", "ssh ", "scp ", "curl ",
+        ):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, workflow)
+
+
 if __name__ == "__main__":
     unittest.main()
