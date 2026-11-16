@@ -3,6 +3,13 @@ main = "src/router.js"
 compatibility_date = "2026-10-13"
 workers_dev = true
 
+# Serve the existing KYM NØIR homepage directly from the Worker at the apex.
+# This avoids falling through to a placeholder/nonexistent origin server.
+# Exact apex pattern matches only http(s)://kymnoir.com/; not other paths.
+[[routes]]
+pattern = "kymnoir.com"
+zone_name = "kymnoir.com"
+
 # Keep the existing project pages routed to this Worker.
 [[routes]]
 pattern = "kymnoir.com/projects"
