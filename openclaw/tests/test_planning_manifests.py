@@ -43,6 +43,21 @@ class PlanningManifestTests(unittest.TestCase):
         self.assertEqual(len(ids), len(set(ids)), "Duplicate agent IDs")
         workspaces = [agent["workspace"] for agent in agents]
         self.assertEqual(len(workspaces), len(set(workspaces)), "Shared workspaces")
+        # Distinct strings are insufficient: nested paths can share agent data.
+        normalized = []
+        for workspace in workspaces:
+            parts = pathlib.PurePosixPath(workspace).parts
+            self.assertGreaterEqual(len(parts), 2, "Workspace must have a child directory")
+            self.assertNotIn("", parts)
+            self.assertNotIn(".", workspace.split("/"), "Noncanonical workspace path")
+            self.assertNotIn("..", parts)
+            normalized.append(parts)
+        for i, left in enumerate(normalized):
+            for right in normalized[i + 1:]:
+                self.assertFalse(
+                    left == right[:len(left)] or right == left[:len(right)],
+                    "Agent workspaces overlap by ancestor/descendant path",
+                )
         for agent in agents:
             with self.subTest(agent=agent["id"]):
                 workspace = pathlib.PurePosixPath(agent["workspace"])
