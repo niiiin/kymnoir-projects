@@ -98,7 +98,7 @@ class PlanningManifestTests(unittest.TestCase):
         self.assertIn("persist-credentials: false", workflow)
         self.assertIn("timeout-minutes:", workflow)
         for forbidden in (
-            "pull_request_target:", "deployment:", "environment:",
+            "workflow_dispatch:", "pull_request_target:", "deployment:", "environment:",
             "secrets.", "id-token: write", "contents: write",
             "packages: write", "ssh ", "scp ", "curl ",
         ):
