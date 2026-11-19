@@ -51,6 +51,10 @@ class PlanningManifestTests(unittest.TestCase):
             self.assertNotIn("", parts)
             self.assertNotIn(".", workspace.split("/"), "Noncanonical workspace path")
             self.assertNotIn("..", parts)
+            self.assertNotIn("\\", workspace, "Backslash path separators are ambiguous")
+            self.assertNotIn("//", workspace, "Repeated path separators are noncanonical")
+            self.assertFalse(workspace.endswith("/"), "Trailing slash is noncanonical")
+            self.assertEqual(str(pathlib.PurePosixPath(workspace)), workspace)
             normalized.append(parts)
         for i, left in enumerate(normalized):
             for right in normalized[i + 1:]:
