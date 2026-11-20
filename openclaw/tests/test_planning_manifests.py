@@ -5,9 +5,11 @@ Run from any directory: python3 openclaw/tests/test_planning_manifests.py
 No network, OpenClaw installation, credentials, or third-party packages needed.
 These JSON files are policy *examples*, not runtime-enforced OpenClaw settings.
 """
+import copy
 import json
 import pathlib
 import unittest
+from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples"
@@ -73,6 +75,34 @@ class PlanningManifestTests(unittest.TestCase):
                 self.assertFalse(allowed & denied)
                 self.assertTrue(DENIED.issubset(denied))
                 self.assertFalse(DENIED & allowed)
+
+
+    def test_malformed_agent_workspaces_are_rejected(self):
+        """Prove isolation assertions fail on hostile or ambiguous fixtures."""
+        baseline = load("agent-boundaries.example.json")
+        self.assertGreaterEqual(len(baseline["agents"]), 2)
+        first = baseline["agents"][0]["workspace"]
+        second = baseline["agents"][1]["workspace"]
+        invalid = {
+            "duplicate": first,
+            "nested": first + "/child",
+            "parent": "workspaces",
+            "traversal": "workspaces/../escape",
+            "dot_segment": "workspaces/./escape",
+            "backslash": "workspaces\\\\escape",
+            "repeated_slash": "workspaces//escape",
+            "trailing_slash": "workspaces/escape/",
+            "absolute": "/workspaces/escape",
+        }
+        self.assertNotEqual(first, second)
+        original_load = load
+        for case, bad_path in invalid.items():
+            with self.subTest(case=case):
+                altered = copy.deepcopy(baseline)
+                altered["agents"][1]["workspace"] = bad_path
+                with mock.patch(__name__ + ".load", return_value=altered):
+                    with self.assertRaises(AssertionError):
+                        self.test_agent_isolation()
 
     def test_telegram_remains_disabled(self):
         doc = load("telegram-access.example.json")
