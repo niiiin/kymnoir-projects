@@ -95,7 +95,6 @@ class PlanningManifestTests(unittest.TestCase):
             "absolute": "/workspaces/escape",
         }
         self.assertNotEqual(first, second)
-        original_load = load
         for case, bad_path in invalid.items():
             with self.subTest(case=case):
                 altered = copy.deepcopy(baseline)
