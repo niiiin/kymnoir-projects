@@ -103,6 +103,33 @@ class PlanningManifestTests(unittest.TestCase):
                     with self.assertRaises(AssertionError):
                         self.test_agent_isolation()
 
+
+    def test_unsafe_telegram_policy_mutations_are_rejected(self):
+        """Negative fixtures must fail the same assertions as the approved example."""
+        baseline = load("telegram-access.example.json")
+        mutations = {
+            "enabled": ("enabled", True),
+            "token_inline": ("bot_token", "example-placeholder-not-a-token"),
+            "token_source": ("bot_token_source", "inline"),
+            "group_enabled": ("group_policy", "open"),
+            "unrestricted_dm": ("dm_policy", "open"),
+            "user_allowlist": ("allowed_user_ids", [12345]),
+            "chat_allowlist": ("allowed_chat_ids", [12345]),
+            "send_without_approval": ("send_without_approval", True),
+            "external_tools": ("external_tool_calls", True),
+            "message_logging": ("log_message_bodies", True),
+            "public_webhook": ("webhook_public_endpoint", True),
+            "group_invites": ("allow_group_invites", True),
+            "approval_record": ("owner_approval_record", "unverified"),
+        }
+        for case, (field, unsafe_value) in mutations.items():
+            with self.subTest(case=case):
+                altered = copy.deepcopy(baseline)
+                altered[field] = unsafe_value
+                with mock.patch(__name__ + ".load", return_value=altered):
+                    with self.assertRaises(AssertionError):
+                        self.test_telegram_remains_disabled()
+
     def test_telegram_remains_disabled(self):
         doc = load("telegram-access.example.json")
         self.assertEqual(doc["mode"], "disabled_until_owner_approval")
