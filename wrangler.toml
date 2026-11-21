@@ -16,3 +16,12 @@ zone_name = "kymnoir.com"
 [[routes]]
 pattern = "kymnoir.com/kimvannie"
 zone_name = "kymnoir.com"
+
+# Short branded entry point to the existing Pumpkin prototype in Amsterdam.
+[[routes]]
+pattern = "kymnoir.com/pumpkin"
+zone_name = "kymnoir.com"
+
+[[routes]]
+pattern = "kymnoir.com/pumpkin/"
+zone_name = "kymnoir.com"
