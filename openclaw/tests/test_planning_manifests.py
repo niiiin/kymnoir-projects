@@ -99,9 +99,16 @@ class PlanningManifestTests(unittest.TestCase):
             with self.subTest(case=case):
                 altered = copy.deepcopy(baseline)
                 altered["agents"][1]["workspace"] = bad_path
+                # unittest.subTest records assertion failures in the active
+                # TestResult instead of propagating them to assertRaises.
+                # Run the real validation in an isolated result and require
+                # at least one rejection, with no unexpected exceptions.
                 with mock.patch(__name__ + ".load", return_value=altered):
-                    with self.assertRaises(AssertionError):
-                        self.test_agent_isolation()
+                    result = unittest.TestResult()
+                    PlanningManifestTests("test_agent_isolation").run(result)
+                self.assertEqual(result.testsRun, 1)
+                self.assertFalse(result.errors, f"{case}: unexpected error")
+                self.assertTrue(result.failures, f"{case}: unsafe path was accepted")
 
 
     def test_unsafe_telegram_policy_mutations_are_rejected(self):
