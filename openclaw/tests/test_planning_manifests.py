@@ -137,6 +137,53 @@ class PlanningManifestTests(unittest.TestCase):
                     with self.assertRaises(AssertionError):
                         self.test_telegram_remains_disabled()
 
+    def test_agent_permission_boundaries(self):
+        """Planning permissions must be explicit, narrow, and agent-specific."""
+        doc = load("agent-boundaries.example.json")
+        expected = {
+            "executive": {"summarize_approved_sources", "draft"},
+            "atlas": {"research_public_sources", "draft", "propose_code"},
+            "sanglung": {"draft", "research_public_sources"},
+            "technical": {"read_repo", "propose_code", "write_feature_branch"},
+        }
+        agents = {agent["id"]: agent for agent in doc["agents"]}
+        self.assertEqual(set(agents), set(expected))
+        for agent_id, permitted in expected.items():
+            with self.subTest(agent=agent_id):
+                agent = agents[agent_id]
+                self.assertEqual(set(agent["allowed"]), permitted)
+                self.assertEqual(len(agent["allowed"]), len(permitted))
+                self.assertEqual(len(agent["denied"]), len(set(agent["denied"])))
+                self.assertTrue(DENIED.issubset(set(agent["denied"])))
+                self.assertNotIn("read_guest_records", agent["allowed"])
+                self.assertNotIn("read_wallets", agent["allowed"])
+        self.assertIn("read_guest_records", agents["sanglung"]["denied"])
+        for agent_id in ("executive", "atlas", "technical"):
+            self.assertIn("read_wallets", agents[agent_id]["denied"])
+
+    def test_unsafe_agent_permission_mutations_are_rejected(self):
+        """Exercise the actual validator against privilege escalation fixtures."""
+        baseline = load("agent-boundaries.example.json")
+        mutations = {
+            "atlas_send": ("atlas", "allowed", "send"),
+            "atlas_wallet": ("atlas", "allowed", "read_wallets"),
+            "sanglung_guest_records": ("sanglung", "allowed", "read_guest_records"),
+            "executive_repo_write": ("executive", "allowed", "write_feature_branch"),
+            "technical_production": ("technical", "allowed", "production_deploy"),
+            "technical_payments": ("technical", "allowed", "payments"),
+        }
+        for case, (agent_id, field, permission) in mutations.items():
+            with self.subTest(case=case):
+                altered = copy.deepcopy(baseline)
+                agent = next(a for a in altered["agents"] if a["id"] == agent_id)
+                agent[field].append(permission)
+                with mock.patch(__name__ + ".load", return_value=altered):
+                    result = unittest.TestResult()
+                    PlanningManifestTests("test_agent_permission_boundaries").run(result)
+                self.assertEqual(result.testsRun, 1)
+                self.assertFalse(result.errors, f"{case}: unexpected error")
+                self.assertTrue(result.failures, f"{case}: escalation accepted")
+
     def test_telegram_remains_disabled(self):
         doc = load("telegram-access.example.json")
         self.assertEqual(doc["mode"], "disabled_until_owner_approval")
