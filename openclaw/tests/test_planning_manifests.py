@@ -147,6 +147,7 @@ class PlanningManifestTests(unittest.TestCase):
             "technical": {"read_repo", "propose_code", "write_feature_branch"},
         }
         agents = {agent["id"]: agent for agent in doc["agents"]}
+        self.assertEqual(len(doc["agents"]), len(expected), "Duplicate or extra agents")
         self.assertEqual(set(agents), set(expected))
         for agent_id, permitted in expected.items():
             with self.subTest(agent=agent_id):
@@ -183,6 +184,32 @@ class PlanningManifestTests(unittest.TestCase):
                 self.assertEqual(result.testsRun, 1)
                 self.assertFalse(result.errors, f"{case}: unexpected error")
                 self.assertTrue(result.failures, f"{case}: escalation accepted")
+
+    def test_missing_denials_and_duplicate_agents_are_rejected(self):
+        """Check removal of mandatory denials and duplicate identity shadowing."""
+        baseline = load("agent-boundaries.example.json")
+        fixtures = []
+        for agent_id, permission in (
+            ("executive", "read_wallets"),
+            ("atlas", "send"),
+            ("sanglung", "read_guest_records"),
+            ("technical", "production_deploy"),
+        ):
+            altered = copy.deepcopy(baseline)
+            agent = next(a for a in altered["agents"] if a["id"] == agent_id)
+            agent["denied"].remove(permission)
+            fixtures.append((agent_id + ":" + permission, altered))
+        altered = copy.deepcopy(baseline)
+        altered["agents"].append(copy.deepcopy(altered["agents"][0]))
+        fixtures.append(("duplicate_identity", altered))
+        for case, altered in fixtures:
+            with self.subTest(case=case):
+                with mock.patch(__name__ + ".load", return_value=altered):
+                    result = unittest.TestResult()
+                    PlanningManifestTests("test_agent_permission_boundaries").run(result)
+                self.assertEqual(result.testsRun, 1)
+                self.assertFalse(result.errors, f"{case}: unexpected error")
+                self.assertTrue(result.failures, f"{case}: unsafe policy accepted")
 
     def test_telegram_remains_disabled(self):
         doc = load("telegram-access.example.json")
