@@ -247,5 +247,34 @@ class PlanningManifestTests(unittest.TestCase):
                 self.assertNotIn(forbidden, workflow)
 
 
+
+    def test_capability_decision_prototype(self):
+        import sys
+        with mock.patch.object(sys, "path", [str(ROOT)] + sys.path):
+            from permission_policy import permits, manifest_matches
+        baseline = load("agent-boundaries.example.json")
+        self.assertTrue(manifest_matches(baseline))
+        for agent in baseline["agents"]:
+            for action in agent["allowed"]:
+                self.assertTrue(permits(agent["id"], action))
+            for action in agent["denied"] + ["unknown", "read_guest_records", "read_wallets"]:
+                self.assertFalse(permits(agent["id"], action))
+        for identity, action in [(None, "draft"), ([], "draft"),
+                                 ("unknown", "draft"), ("atlas", []),
+                                 ("Atlas", "draft"), ("atlas", "Draft")]:
+            self.assertFalse(permits(identity, action))
+        for field, value in [("allowed", ["send"]), ("allowed", [{}]),
+                             ("denied", []), ("id", []),
+                             ("workspace", "workspaces/technical")]:
+            altered = copy.deepcopy(baseline)
+            altered["agents"][0][field] = value
+            self.assertFalse(manifest_matches(altered))
+        altered = copy.deepcopy(baseline)
+        altered["agents"][1] = altered["agents"][0]
+        self.assertFalse(manifest_matches(altered))
+        for malformed in (None, [], {}, {"agents": None}):
+            self.assertFalse(manifest_matches(malformed))
+
+
 if __name__ == "__main__":
     unittest.main()
